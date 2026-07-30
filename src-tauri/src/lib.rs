@@ -258,25 +258,35 @@ fn xeno_downloaded(state: State<'_, xeno::XenoState>) -> bool {
 }
 
 #[tauri::command]
-fn open_pastebin_bat() -> Result<(), String> {
+fn open_pastebin_bat(app: tauri::AppHandle) -> Result<(), String> {
+    let bat_name = "toggle-pastebin.bat";
     let candidates: Vec<std::path::PathBuf> = [
-        std::env::current_exe().ok().and_then(|e| e.parent().map(|p| p.join("toggle-pastebin.bat"))),
-        std::env::current_dir().ok().map(|d| d.join("toggle-pastebin.bat")),
-        std::env::current_dir().ok().and_then(|d| d.parent().map(|p| p.join("toggle-pastebin.bat"))),
-        std::env::current_dir().ok().and_then(|d| d.parent().and_then(|p| p.parent()).map(|p| p.join("toggle-pastebin.bat"))),
+        std::env::current_exe().ok().and_then(|e| e.parent().map(|p| p.join(bat_name))),
+        app.path().resource_dir().ok().map(|p| p.join(bat_name)),
+        std::env::current_dir().ok().map(|d| d.join(bat_name)),
+        std::env::current_dir().ok().and_then(|d| d.parent().map(|p| p.join(bat_name))),
+        std::env::current_dir().ok().and_then(|d| d.parent().and_then(|p| p.parent()).map(|p| p.join(bat_name))),
     ].into_iter().flatten().collect();
 
     let bat = candidates.iter().find(|p| p.exists()).ok_or("toggle-pastebin.bat not found")?;
 
     #[cfg(target_os = "windows")]
     {
-        use std::os::windows::process::CommandExt;
-        const SW_SHOWNORMAL: u32 = 1;
-        std::process::Command::new("cmd")
-            .args(["/c", "start", "/wait", "\"\"", &bat.to_string_lossy()])
-            .creation_flags(SW_SHOWNORMAL)
-            .spawn()
-            .map_err(|e| e.to_string())?;
+        use std::os::windows::ffi::OsStrExt;
+        use windows_sys::Win32::UI::Shell::ShellExecuteW;
+
+        let path_wide: Vec<u16> = bat.as_os_str().encode_wide().chain(std::iter::once(0)).collect();
+        let op: Vec<u16> = "open".encode_utf16().chain(std::iter::once(0)).collect();
+        unsafe {
+            ShellExecuteW(
+                std::ptr::null_mut(),
+                op.as_ptr(),
+                path_wide.as_ptr(),
+                std::ptr::null(),
+                std::ptr::null(),
+                1,
+            );
+        }
     }
     Ok(())
 }
