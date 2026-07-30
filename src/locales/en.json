@@ -1,0 +1,129 @@
+{
+  "app": {
+    "name": "Obsidian"
+  },
+  "pages": {
+    "home": "Home",
+    "editor": "Editor",
+    "scripthub": "Scripts",
+    "browser": "Browser",
+    "settings": "Settings",
+    "library": "Library",
+    "ai": "AI"
+  },
+  "home": {
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "attach": "Attach",
+    "attaching": "Attaching...",
+    "scripts": "Scripts",
+    "editor": "Editor",
+    "ai": "AI",
+    "settings": "Settings",
+    "browser": "Browser",
+    "kill": "Kill",
+    "library": "Library"
+  },
+  "editor": {
+    "attach": "Attach",
+    "execute": "Execute",
+    "clear": "Clear",
+    "kill": "Kill",
+    "import": "Import",
+    "export": "Export",
+    "save": "Save",
+    "newTab": "New tab",
+    "welcome": "print(\"Welcome to Obsidian\")"
+  },
+  "scripthub": {
+    "search": "Search scripts...",
+    "run": "Run",
+    "copy": "Copy",
+    "favorites": "Favorites",
+    "all": "All",
+    "noScripts": "No scripts found"
+  },
+  "browser": {
+    "back": "Back",
+    "forward": "Forward",
+    "reload": "Reload",
+    "home": "Home"
+  },
+  "library": {
+    "title": "Library",
+    "empty": "Your library is empty",
+    "load": "Load",
+    "delete": "Delete",
+    "rename": "Rename"
+  },
+  "ai": {
+    "title": "Obsidian AI Assistant",
+    "subtitle": "Ask me anything about scripting, exploits, or let me help you write Lua code.",
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "newChat": "New Chat",
+    "settings": "Settings",
+    "model": "Model",
+    "selectModel": "Select model",
+    "noModels": "No models configured",
+    "configureHint": "Configure models in opencode.json",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "error": "Error: OpenCode server is not running",
+    "welcome": "Your exploit assistant. Ask anything about Roblox scripting.",
+    "untitled": "Untitled",
+    "chipAimbot": "Aimbot",
+    "chipEsp": "ESP",
+    "chipFly": "Fly",
+    "chipSpeed": "Speed",
+    "chipHowTo": "How to use"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "displayName": "Display Name",
+    "displayNameDesc": "Name shown on the home screen",
+    "appearance": "Appearance",
+    "accentColor": "Accent Color",
+    "fontSize": "Font Size",
+    "lowPerf": "Low Performance Mode",
+    "lowPerfDesc": "Reduce animations for better performance",
+    "features": "Features",
+    "discordRpc": "Discord Rich Presence",
+    "discordRpcDesc": "Show your activity on Discord",
+    "autoAttach": "Auto-Attach",
+    "autoAttachDesc": "Automatically attach when Roblox is detected",
+    "alwaysOnTop": "Always on Top",
+    "alwaysOnTopDesc": "Keep window above other windows",
+    "minimizeToTray": "Minimize to Tray",
+    "minimizeToTrayDesc": "Minimize instead of closing",
+    "language": "Language",
+    "server": "Server",
+    "version": "Version",
+    "status": "Status",
+    "online": "Online",
+    "offline": "Offline",
+    "logs": "Logs",
+    "updates": "Updates",
+    "checkUpdates": "Check for updates",
+    "updateAvailable": "Update available",
+    "downloading": "Downloading...",
+    "install": "Install",
+    "upToDate": "You're up to date"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "close": "Close",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "copy": "Copy",
+    "paste": "Paste"
+  }
+}

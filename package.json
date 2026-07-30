@@ -1,0 +1,39 @@
+{
+  "name": "obsidian",
+  "version": "1.0.0",
+  "description": "Obsidian - Custom Tauri UI",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri:dev": "npx @tauri-apps/cli dev",
+    "tauri:build": "npx @tauri-apps/cli build"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
+    "@opencode-ai/sdk": "^1.18.5",
+    "@tauri-apps/api": "^2.11.1",
+    "@tauri-apps/plugin-clipboard-manager": "^2.3.2",
+    "@tauri-apps/plugin-dialog": "^2.7.2",
+    "@tauri-apps/plugin-fs": "^2.5.1",
+    "@tauri-apps/plugin-opener": "^2.5.4",
+    "@tauri-apps/plugin-shell": "^2.3.5",
+    "axios": "^1.7.2",
+    "bufferutil": "^4.1.0",
+    "monaco-editor": "^0.52.0",
+    "utf-8-validate": "^6.0.6"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.1",
+    "@types/node": "^20.14.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sharp": "^0.35.3",
+    "terser": "^5.49.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.3.1"
+  }
+}

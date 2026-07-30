@@ -1,0 +1,251 @@
+.output-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+  transition: background 0.15s;
+  color: rgba(255,255,255,0.3);
+  font-size: 11px;
+  height: 26px;
+}
+
+.output-bar:hover {
+  background: rgba(0,0,0,0.3);
+  color: rgba(255,255,255,0.5);
+  box-shadow: 0 -1px 8px rgba(113, 245, 220, 0.04);
+}
+
+.output-bar-label {
+  font-weight: 500;
+}
+
+.output-bar-count,
+.output-count {
+  background: var(--mint-glow);
+  color: var(--mint);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 0 5px;
+  border-radius: 8px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.output-bar-error {
+  background: rgba(255,80,80,0.15);
+  color: #ff6464;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 0 5px;
+  border-radius: 8px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.output-panel {
+  display: flex;
+  flex-direction: column;
+  height: 140px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.15);
+  animation: slideUp 0.3s var(--ease-out);
+}
+
+.output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  min-height: 24px;
+}
+
+.output-header-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: rgba(255,255,255,0.3);
+  font-size: 11px;
+  transition: color 0.15s;
+}
+
+.output-header-left:hover {
+  color: rgba(255,255,255,0.5);
+}
+
+.output-title {
+  font-weight: 500;
+}
+
+.output-clear {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.2);
+  cursor: pointer;
+  padding: 3px 5px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.output-clear:hover {
+  color: rgba(255,100,100,0.7);
+  background: rgba(255,80,80,0.1);
+}
+
+.output-filters {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.output-filter {
+  background: none;
+  border: 1px solid transparent;
+  color: rgba(255,255,255,0.25);
+  font-size: 10px;
+  font-family: inherit;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.output-filter:hover {
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.04);
+}
+
+.output-filter.active {
+  color: var(--mint);
+  background: var(--mint-glow);
+  border-color: rgba(100,255,200,0.15);
+}
+
+.output-filter-warn.active {
+  color: #ffc832;
+  background: rgba(255,200,50,0.1);
+}
+
+.output-filter-error.active {
+  color: #ff6464;
+  background: rgba(255,80,80,0.1);
+}
+
+.output-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.output-action {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.2);
+  cursor: pointer;
+  padding: 3px 5px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.output-action:hover {
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.06);
+}
+
+.output-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.output-empty {
+  padding: 20px;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.15);
+}
+
+.output-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 2px 12px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+  line-height: 1.5;
+  animation: fadeIn 0.15s ease;
+}
+
+.output-entry:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.output-time {
+  color: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+  font-size: 10px;
+  padding-top: 1px;
+}
+
+.output-type-badge {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0 4px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  letter-spacing: 0.03em;
+  padding-top: 1px;
+}
+
+.output-print .output-type-badge {
+  background: var(--mint-glow);
+  color: var(--mint);
+}
+
+.output-warn .output-type-badge {
+  background: rgba(255,200,50,0.12);
+  color: #ffc832;
+}
+
+.output-error .output-type-badge {
+  background: rgba(255,80,80,0.12);
+  color: #ff6464;
+}
+
+.output-info .output-type-badge {
+  background: var(--mint-glow);
+  color: var(--mint);
+}
+
+.output-msg {
+  color: rgba(255,255,255,0.6);
+  word-break: break-all;
+}
+
+.output-print .output-msg {
+  color: rgba(255,255,255,0.6);
+}
+
+.output-warn .output-msg {
+  color: rgba(255,200,50,0.8);
+}
+
+.output-error .output-msg {
+  color: rgba(255,100,100,0.85);
+}
+
+.output-info .output-msg {
+  color: var(--mint-text-dim);
+}

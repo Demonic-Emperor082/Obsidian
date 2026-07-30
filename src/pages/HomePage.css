@@ -1,0 +1,273 @@
+.home {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 28px 32px 0 28px;
+  overflow: hidden;
+}
+
+.home::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 80% 40%, rgba(59, 218, 201, 0.06), transparent 35%);
+}
+
+.home-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Left ─────────────────────────────────── */
+.home-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  z-index: 1;
+  animation: slideInLeft 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); filter: blur(2px); }
+  to { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+
+.home-clock {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 0.92;
+}
+
+.clock-hours,
+.clock-minutes {
+  font-size: 62px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.clock-hours {
+  animation: clockReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+.clock-minutes {
+  animation: clockReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+@keyframes clockReveal {
+  from { opacity: 0; transform: translateY(6px) translateX(-6px); filter: blur(3px); }
+  60% { filter: blur(0); }
+  to { opacity: 1; transform: translateY(0) translateX(0); filter: blur(0); }
+}
+
+.home-greeting-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fadeSlideUp 0.5s 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.clock-greeting {
+  font-size: 15px;
+  color: var(--text-dim);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.clock-greeting strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.home-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-1);
+  color: var(--text-muted);
+  width: fit-content;
+  transition: all 0.35s var(--ease-out);
+}
+
+.home-status.ok {
+  color: var(--mint);
+  border-color: var(--mint-border);
+  background: var(--mint-bg);
+  animation: glowPulse 3s ease infinite;
+}
+
+.home-status.warn {
+  color: #f2c53d;
+  border-color: rgba(242, 197, 61, 0.3);
+  background: rgba(242, 197, 61, 0.08);
+}
+
+.home-status.clickable {
+  cursor: pointer;
+}
+
+.home-status.clickable:hover {
+  background: var(--mint-bg-hover);
+  border-color: var(--mint-border-bright);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.home-status.ok .status-dot {
+  animation: pulse 2s ease infinite;
+}
+
+/* ── Right: tiles ─────────────────────────── */
+.home-right {
+  z-index: 1;
+  padding-top: 4px;
+  animation: slideInRight 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); filter: blur(2px); }
+  to { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+
+.home-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(2, 100px);
+  gap: 10px;
+}
+
+.home-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--mint-bg);
+  border: 1px solid var(--mint-border);
+  border-radius: 14px;
+  color: var(--mint);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInScale 0.5s var(--ease-out) both;
+}
+
+.home-tiles .home-tile:nth-child(1) { animation-delay: 0.1s; }
+.home-tiles .home-tile:nth-child(2) { animation-delay: 0.15s; }
+.home-tiles .home-tile:nth-child(3) { animation-delay: 0.2s; }
+.home-tiles .home-tile:nth-child(4) { animation-delay: 0.25s; }
+.home-tiles .home-tile:nth-child(5) { animation-delay: 0.3s; }
+.home-tiles .home-tile:nth-child(6) { animation-delay: 0.35s; }
+
+.home-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, var(--mint-glow-strong) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.home-tile:hover {
+  background: var(--mint-bg-hover);
+  border-color: var(--mint-border-bright);
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 12px 28px var(--mint-glow), 0 0 0 1px var(--mint-border-bright), 0 0 40px rgba(113, 245, 220, 0.08);
+}
+
+.home-tile:hover::before { opacity: 1; }
+
+.home-tile:active {
+  transform: translateY(-1px) scale(0.96);
+  transition-duration: 0.1s;
+}
+
+.home-tile-icon {
+  display: flex;
+  filter: drop-shadow(0 0 5px var(--mint-glow-strong));
+  transition: all 0.22s var(--ease-spring);
+}
+
+.home-tile:hover .home-tile-icon {
+  filter: drop-shadow(0 0 10px var(--mint-glow-intense));
+  transform: scale(1.1);
+}
+
+.home-tile-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mint-text-dim);
+  transition: color 0.22s;
+}
+
+.home-tile:hover .home-tile-label {
+  color: var(--mint-text-bright);
+}
+
+.home-tile-inject.loading {
+  opacity: 0.6;
+  cursor: wait;
+  animation: none;
+}
+
+.home-tile-inject {
+  background: var(--mint-bg);
+  border-color: var(--mint-border);
+}
+
+.home-tile-inject:hover {
+  background: var(--mint-bg-hover);
+  border-color: var(--mint-border-bright);
+  box-shadow: 0 10px 24px var(--mint-glow), 0 0 0 1px var(--mint-border-bright);
+}
+
+.home-tile-kill {
+  color: var(--error);
+  background: var(--error-glow);
+  border-color: var(--error-border);
+}
+
+.home-tile-kill .home-tile-label {
+  color: var(--error);
+}
+
+.home-tile-kill:hover {
+  background: rgba(255, 68, 68, 0.15);
+  border-color: rgba(255, 68, 68, 0.35);
+  box-shadow: 0 10px 24px rgba(255, 68, 68, 0.15), 0 0 0 1px rgba(255, 68, 68, 0.3);
+}
+
+.home-tile-kill:hover .home-tile-label {
+  color: #ff7777;
+}

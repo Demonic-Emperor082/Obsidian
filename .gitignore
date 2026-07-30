@@ -1,0 +1,11 @@
+node_modules/
+dist/
+target/
+
+*.exe
+*.pdb
+*.zip
+dll/
+logs/
+
+renegade-server-extracted/

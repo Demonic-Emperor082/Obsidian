@@ -1,0 +1,129 @@
+{
+  "app": {
+    "name": "Obsidian"
+  },
+  "pages": {
+    "home": "Inicio",
+    "editor": "Editor",
+    "scripthub": "Scripts",
+    "browser": "Navegador",
+    "settings": "Ajustes",
+    "library": "Biblioteca",
+    "ai": "IA"
+  },
+  "home": {
+    "greeting": {
+      "morning": "Buenos días",
+      "afternoon": "Buenas tardes",
+      "evening": "Buenas noches"
+    },
+    "attach": "Inyectar",
+    "attaching": "Inyectando...",
+    "scripts": "Scripts",
+    "editor": "Editor",
+    "ai": "IA",
+    "settings": "Ajustes",
+    "browser": "Navegador",
+    "kill": "Matar",
+    "library": "Biblioteca"
+  },
+  "editor": {
+    "attach": "Inyectar",
+    "execute": "Ejecutar",
+    "clear": "Limpiar",
+    "kill": "Matar",
+    "import": "Importar",
+    "export": "Exportar",
+    "save": "Guardar",
+    "newTab": "Nueva pestaña",
+    "welcome": "print(\"Bienvenido a Obsidian\")"
+  },
+  "scripthub": {
+    "search": "Buscar scripts...",
+    "run": "Ejecutar",
+    "copy": "Copiar",
+    "favorites": "Favoritos",
+    "all": "Todos",
+    "noScripts": "No se encontraron scripts"
+  },
+  "browser": {
+    "back": "Atrás",
+    "forward": "Adelante",
+    "reload": "Recargar",
+    "home": "Inicio"
+  },
+  "library": {
+    "title": "Biblioteca",
+    "empty": "Tu biblioteca está vacía",
+    "load": "Cargar",
+    "delete": "Eliminar",
+    "rename": "Renombrar"
+  },
+  "ai": {
+    "title": "Asistente IA de Obsidian",
+    "subtitle": "Pregúntame sobre scripting, exploits o déjame ayudarte a escribir código Lua.",
+    "placeholder": "Escribe un mensaje...",
+    "send": "Enviar",
+    "newChat": "Nuevo chat",
+    "settings": "Ajustes",
+    "model": "Modelo",
+    "selectModel": "Seleccionar modelo",
+    "noModels": "No hay modelos configurados",
+    "configureHint": "Configura modelos en opencode.json",
+    "connected": "Conectado",
+    "disconnected": "Desconectado",
+    "error": "Error: el servidor OpenCode no está ejecutándose",
+    "welcome": "Tu asistente de exploits. Pregunta cualquier cosa sobre scripting de Roblox.",
+    "untitled": "Sin título",
+    "chipAimbot": "Aimbot",
+    "chipEsp": "ESP",
+    "chipFly": "Volar",
+    "chipSpeed": "Velocidad",
+    "chipHowTo": "Cómo usar"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "profile": "Perfil",
+    "displayName": "Nombre de usuario",
+    "displayNameDesc": "Nombre que se muestra en la pantalla de inicio",
+    "appearance": "Apariencia",
+    "accentColor": "Color de acento",
+    "fontSize": "Tamaño de fuente",
+    "lowPerf": "Modo bajo rendimiento",
+    "lowPerfDesc": "Reduce animaciones para mejor rendimiento",
+    "features": "Funciones",
+    "discordRpc": "Discord Rich Presence",
+    "discordRpcDesc": "Muestra tu actividad en Discord",
+    "autoAttach": "Auto-inyectar",
+    "autoAttachDesc": "Inyectar automáticamente al detectar Roblox",
+    "alwaysOnTop": "Siempre visible",
+    "alwaysOnTopDesc": "Mantener la ventana sobre otras",
+    "minimizeToTray": "Minimizar a bandeja",
+    "minimizeToTrayDesc": "Minimizar en lugar de cerrar",
+    "language": "Idioma",
+    "server": "Servidor",
+    "version": "Versión",
+    "status": "Estado",
+    "online": "En línea",
+    "offline": "Fuera de línea",
+    "logs": "Logs",
+    "updates": "Actualizaciones",
+    "checkUpdates": "Buscar actualizaciones",
+    "updateAvailable": "Actualización disponible",
+    "downloading": "Descargando...",
+    "install": "Instalar",
+    "upToDate": "Estás en la última versión"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "copy": "Copiar",
+    "paste": "Pegar"
+  }
+}

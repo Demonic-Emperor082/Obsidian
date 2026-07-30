@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Obsidian">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f1a1c"/>
+      <stop offset="100%" stop-color="#060a0b"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a8ffe8"/>
+      <stop offset="50%" stop-color="#4dffc3"/>
+      <stop offset="100%" stop-color="#1a9e8a"/>
+    </linearGradient>
+    <linearGradient id="inner" x1="64" y1="20" x2="64" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2a5c54"/>
+      <stop offset="100%" stop-color="#0c1e1c"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="50%" cy="35%" r="50%">
+      <stop offset="0%" stop-color="#c0fff0" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#c0fff0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Rounded background -->
+  <rect width="128" height="128" rx="32" fill="url(#bg)"/>
+
+  <!-- Soft outer glow -->
+  <circle cx="64" cy="64" r="52" fill="#4dffc3" opacity="0.04" filter="url(#glow)"/>
+
+  <!-- Outer ring -->
+  <circle cx="64" cy="64" r="44" fill="none" stroke="url(#edge)" stroke-width="2.5" opacity="0.7"/>
+
+  <!-- Inner shape — teardrop / drop -->
+  <path d="M64 28 C64 28, 92 52, 92 72 C92 87, 80 98, 64 98 C48 98, 36 87, 36 72 C36 52, 64 28, 64 28Z"
+        fill="url(#inner)" stroke="url(#edge)" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Shine on the drop -->
+  <path d="M64 28 C64 28, 92 52, 92 72 C92 87, 80 98, 64 98 C48 98, 36 87, 36 72 C36 52, 64 28, 64 28Z"
+        fill="url(#shine)"/>
+
+  <!-- Highlight arc -->
+  <path d="M48 58 C52 46, 60 38, 64 34"
+        fill="none" stroke="#c0fff0" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- Small reflection dot -->
+  <circle cx="52" cy="62" r="3" fill="#e0fff6" opacity="0.5"/>
+
+  <!-- Bottom accent line -->
+  <path d="M52 88 C58 94, 70 94, 76 88"
+        fill="none" stroke="#4dffc3" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+</svg>

@@ -1,0 +1,145 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* ── Title bar (top, draggable) ─── */
+.titlebar {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  background: rgba(7, 9, 13, 0.95);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  flex-shrink: 0;
+  -webkit-app-region: drag;
+  z-index: 20;
+}
+
+.titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  -webkit-app-region: no-drag;
+}
+
+.titlebar-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.titlebar-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.titlebar-drag {
+  flex: 1;
+  height: 100%;
+  -webkit-app-region: drag;
+}
+
+.titlebar-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  -webkit-app-region: no-drag;
+}
+
+.ctrl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.ctrl-btn:hover {
+  background: var(--bg-2);
+  color: var(--text);
+}
+
+.ctrl-close:hover {
+  background: var(--error-glow);
+  color: var(--error-close);
+}
+
+/* ── Body: sidebar + main ─── */
+.app-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.app-content {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page-transition {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page-exit {
+  animation: slideToLeft 0.65s cubic-bezier(0.4, 0, 0.1, 1) both;
+  z-index: 1;
+}
+
+/* Directional page transitions */
+.anim-left, .anim-right {
+  z-index: 2;
+  animation: slideToRight 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes slideToRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideToLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+}

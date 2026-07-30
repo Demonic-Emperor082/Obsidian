@@ -1,0 +1,391 @@
+.lib-page {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.lib-sidebar {
+  width: 220px;
+  min-width: 220px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  background: rgba(0,0,0,0.15);
+}
+
+.lib-sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px 8px;
+}
+
+.lib-sidebar-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.4);
+}
+
+.lib-new-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.lib-new-btn:hover {
+  border-color: var(--mint-border);
+  color: var(--mint);
+}
+
+.lib-search {
+  padding: 0 10px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.lib-search svg {
+  color: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+.lib-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  padding: 4px 0;
+}
+
+.lib-search input::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+
+.lib-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.lib-empty-list {
+  padding: 20px 12px;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+}
+
+.lib-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all 0.15s var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: fadeIn 0.25s var(--ease-out) both;
+}
+
+.lib-item:nth-child(1) { animation-delay: 0.02s; }
+.lib-item:nth-child(2) { animation-delay: 0.05s; }
+.lib-item:nth-child(3) { animation-delay: 0.08s; }
+.lib-item:nth-child(4) { animation-delay: 0.11s; }
+.lib-item:nth-child(5) { animation-delay: 0.14s; }
+
+.lib-item:hover {
+  background: rgba(255,255,255,0.03);
+  transform: translateX(2px);
+}
+
+.lib-item.active {
+  background: var(--mint-bg);
+  border-left-color: var(--mint);
+}
+
+.lib-item-name {
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lib-item.active .lib-item-name {
+  color: var(--mint);
+}
+
+.lib-item-time {
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+}
+
+.lib-rename-input {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--mint-border);
+  border-radius: 3px;
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
+  padding: 2px 4px;
+  outline: none;
+  width: 100%;
+}
+
+.lib-sidebar-foot {
+  padding: 8px 12px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.lib-count {
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+}
+
+/* Content area */
+.lib-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.lib-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.2);
+  font-size: 12px;
+  animation: fadeInScale 0.5s var(--ease-out);
+}
+
+.lib-placeholder-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.12);
+}
+
+/* Detail view */
+.lib-detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.3s var(--ease-out);
+}
+
+.lib-detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  gap: 12px;
+}
+
+.lib-detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.lib-detail-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lib-detail-meta {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+}
+
+.lib-detail-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.lib-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+  white-space: nowrap;
+}
+
+.lib-btn-ghost {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.5);
+}
+
+.lib-btn-ghost:hover {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+}
+
+.lib-btn-accent {
+  background: var(--mint-bg);
+  color: var(--mint);
+}
+
+.lib-btn-accent:hover {
+  background: var(--mint-bg-hover);
+}
+
+.lib-btn-danger:hover {
+  background: rgba(255,80,80,0.12);
+  color: #ff6464;
+}
+
+.lib-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.lib-code {
+  flex: 1;
+  margin: 0;
+  padding: 16px;
+  overflow: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.65);
+  background: rgba(0,0,0,0.1);
+  white-space: pre-wrap;
+  word-break: break-all;
+  tab-size: 4;
+}
+
+/* New script form */
+.lib-new-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 10px;
+}
+
+.lib-new-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lib-new-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+}
+
+.lib-modal-x {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.3);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.lib-modal-x:hover {
+  color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.06);
+}
+
+.lib-new-name {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 5px;
+  padding: 8px 10px;
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.lib-new-name:focus {
+  border-color: var(--mint-border);
+}
+
+.lib-new-name::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+
+.lib-new-code {
+  flex: 1;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 5px;
+  padding: 10px;
+  color: rgba(255,255,255,0.65);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  resize: none;
+  outline: none;
+  tab-size: 4;
+  transition: border-color 0.15s;
+}
+
+.lib-new-code:focus {
+  border-color: var(--mint-border);
+}
+
+.lib-new-code::placeholder {
+  color: rgba(255,255,255,0.15);
+}
+
+.lib-new-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.lib-btn-cancel {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.5);
+}
+
+.lib-btn-cancel:hover {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+}
+
+.lib-btn-save {
+  background: var(--mint-bg);
+  color: var(--mint);
+}
+
+.lib-btn-save:hover:not(:disabled) {
+  background: var(--mint-bg-hover);
+}
+
+.lib-btn-save:disabled {
+  opacity: 0.3;
+}
