@@ -9,10 +9,361 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
       html, body { background: #0a0a0a; margin: 0; padding: 0; }
+
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+        background: #030305;
+        font-family: 'Segoe UI', -apple-system, sans-serif;
+        user-select: none;
+        transition: opacity 0.4s ease;
+      }
+      #splash.hide { opacity: 0; pointer-events: none; }
+
+      #splash canvas#bg {
+        position: fixed;
+        inset: 0;
+        width: 100%; height: 100%;
+        z-index: 0;
+      }
+
+      #splash .glow-orb {
+        position: absolute;
+        width: 160px; height: 160px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(127,255,212,0.08) 0%, transparent 70%);
+        filter: blur(30px);
+        animation: orbBreathe 4s ease-in-out infinite;
+        z-index: 1;
+      }
+      @keyframes orbBreathe {
+        0%, 100% { transform: scale(1); opacity: 0.6; }
+        50% { transform: scale(1.15); opacity: 1; }
+      }
+
+      #splash .content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      #splash .logo-area {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+        transform: scale(0.7);
+        animation: logoReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+      }
+      @keyframes logoReveal {
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      #splash .ring-progress {
+        position: absolute;
+        inset: -12px;
+        z-index: 0;
+      }
+      #splash .ring-progress svg {
+        width: 100%; height: 100%;
+        transform: rotate(-90deg);
+      }
+      #splash .ring-bg {
+        fill: none;
+        stroke: rgba(255,255,255,0.03);
+        stroke-width: 2;
+      }
+      #splash .ring-fill {
+        fill: none;
+        stroke: url(#ringGrad);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-dasharray: 314;
+        stroke-dashoffset: 314;
+        animation: ringFill 3.4s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+        filter: drop-shadow(0 0 6px rgba(127,255,212,0.4));
+      }
+      @keyframes ringFill {
+        to { stroke-dashoffset: 0; }
+      }
+
+      #splash .ring-glow {
+        position: absolute;
+        inset: -14px;
+        border-radius: 50%;
+        border: 1px solid transparent;
+        border-top-color: rgba(127,255,212,0.15);
+        border-right-color: rgba(91,130,255,0.1);
+        opacity: 0;
+        animation: fadeIn 0.8s ease 1s forwards, spin 3s linear infinite;
+      }
+      #splash .ring-glow-2 {
+        position: absolute;
+        inset: -22px;
+        border-radius: 50%;
+        border: 1px solid transparent;
+        border-bottom-color: rgba(127,255,212,0.08);
+        opacity: 0;
+        animation: fadeIn 0.8s ease 1.2s forwards, spin 4.5s linear infinite reverse;
+      }
+
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes fadeIn { to { opacity: 1; } }
+
+      #splash .logo {
+        width: 100px; height: 100px;
+        border-radius: 50%;
+        position: relative;
+        z-index: 1;
+        filter: drop-shadow(0 0 20px rgba(127,255,212,0.2));
+      }
+
+      #splash .text-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+
+      #splash .name {
+        color: #e8e8e8;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.35em;
+        opacity: 0;
+        transform: translateY(8px);
+        animation: textUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+      }
+      @keyframes textUp { to { opacity: 1; transform: translateY(0); } }
+
+      #splash .tagline {
+        color: rgba(255,255,255,0.12);
+        font-size: 8px;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        opacity: 0;
+        animation: fadeIn 0.6s ease 1s forwards;
+      }
+
+      #splash .status {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        opacity: 0;
+        animation: fadeIn 0.5s ease 1.4s forwards;
+      }
+
+      #splash .status-dot {
+        width: 5px; height: 5px;
+        border-radius: 50%;
+        background: #7fffd4;
+        box-shadow: 0 0 8px rgba(127,255,212,0.5);
+        animation: dotBlink 1.6s ease-in-out infinite;
+      }
+      @keyframes dotBlink {
+        0%, 100% { opacity: 0.3; transform: scale(0.8); }
+        50% { opacity: 1; transform: scale(1.2); }
+      }
+
+      #splash .status-text {
+        color: rgba(255,255,255,0.2);
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        font-family: 'Consolas', 'SF Mono', monospace;
+      }
     </style>
   </head>
   <body>
+    <div id="splash">
+      <canvas id="bg"></canvas>
+      <div class="glow-orb"></div>
+
+      <div class="content">
+        <div class="logo-area">
+          <div class="ring-glow"></div>
+          <div class="ring-glow-2"></div>
+          <svg class="ring-progress" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#7fffd4"/>
+                <stop offset="50%" stop-color="#5b82ff"/>
+                <stop offset="100%" stop-color="#a855f7"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg" cx="60" cy="60" r="50"/>
+            <circle class="ring-fill" cx="60" cy="60" r="50"/>
+          </svg>
+          <img class="logo" src="./obsidian-mark.svg" alt="Obsidian">
+        </div>
+
+        <div class="text-group">
+          <div class="name">OBSIDIAN</div>
+          <div class="tagline">Roblox Script Executor</div>
+        </div>
+
+        <div class="status">
+          <div class="status-dot"></div>
+          <span class="status-text">initializing</span>
+        </div>
+      </div>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <script>
+      const canvas = document.getElementById('bg');
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      let W, H;
+
+      function resize() {
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const cx = () => W / 2;
+      const cy = () => H / 2;
+
+      class OrbitalParticle {
+        constructor() { this.reset(); }
+        reset() {
+          this.angle = Math.random() * Math.PI * 2;
+          this.radius = 60 + Math.random() * 80;
+          this.speed = (0.003 + Math.random() * 0.006) * (Math.random() > 0.5 ? 1 : -1);
+          this.size = Math.random() * 1.5 + 0.3;
+          this.alpha = Math.random() * 0.4 + 0.1;
+          this.color = Math.random() > 0.6
+            ? `rgba(127, 255, 212, ${this.alpha})`
+            : `rgba(91, 130, 255, ${this.alpha})`;
+          this.wobble = Math.random() * 8;
+          this.wobbleSpeed = Math.random() * 0.02 + 0.01;
+          this.wobblePhase = Math.random() * Math.PI * 2;
+        }
+        update() {
+          this.angle += this.speed;
+          this.wobblePhase += this.wobbleSpeed;
+        }
+        draw() {
+          const w = Math.sin(this.wobblePhase) * this.wobble;
+          const r = this.radius + w;
+          const x = cx() + Math.cos(this.angle) * r;
+          const y = cy() + Math.sin(this.angle) * r;
+          ctx.beginPath();
+          ctx.arc(x, y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+        }
+      }
+
+      class EnergyLine {
+        constructor() { this.reset(); }
+        reset() {
+          const side = Math.floor(Math.random() * 4);
+          if (side === 0) { this.sx = Math.random() * W; this.sy = 0; }
+          else if (side === 1) { this.sx = W; this.sy = Math.random() * H; }
+          else if (side === 2) { this.sx = Math.random() * W; this.sy = H; }
+          else { this.sx = 0; this.sy = Math.random() * H; }
+          this.progress = 0;
+          this.speed = 0.008 + Math.random() * 0.012;
+          this.alpha = 0;
+          this.maxAlpha = 0.03 + Math.random() * 0.04;
+          this.width = 0.3 + Math.random() * 0.3;
+          this.color = Math.random() > 0.5 ? '127, 255, 212' : '91, 130, 255';
+        }
+        update() {
+          this.progress += this.speed;
+          if (this.progress < 0.5) {
+            this.alpha = this.maxAlpha * (this.progress * 2);
+          } else {
+            this.alpha = this.maxAlpha * (1 - (this.progress - 0.5) * 2);
+          }
+          if (this.progress >= 1) this.reset();
+        }
+        draw() {
+          const ex = this.sx + (cx() - this.sx) * this.progress;
+          const ey = this.sy + (cy() - this.sy) * this.progress;
+          const tail = Math.max(0, this.progress - 0.15);
+          const tx = this.sx + (cx() - this.sx) * tail;
+          const ty = this.sy + (cy() - this.sy) * tail;
+          ctx.beginPath();
+          ctx.moveTo(tx, ty);
+          ctx.lineTo(ex, ey);
+          ctx.strokeStyle = `rgba(${this.color}, ${this.alpha})`;
+          ctx.lineWidth = this.width;
+          ctx.stroke();
+        }
+      }
+
+      class Dust {
+        constructor() { this.reset(true); }
+        reset(init) {
+          this.x = Math.random() * W;
+          this.y = init ? Math.random() * H : H + 10;
+          this.vx = (Math.random() - 0.5) * 0.15;
+          this.vy = -(Math.random() * 0.3 + 0.1);
+          this.size = Math.random() * 1 + 0.2;
+          this.alpha = Math.random() * 0.15 + 0.02;
+          this.life = Math.random() * 400 + 200;
+          this.age = 0;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.age++;
+          if (this.age > this.life || this.y < -10) this.reset(false);
+        }
+        draw() {
+          const fade = 1 - this.age / this.life;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 220, 255, ${this.alpha * fade})`;
+          ctx.fill();
+        }
+      }
+
+      const orbitals = Array.from({ length: 35 }, () => new OrbitalParticle());
+      const lines = Array.from({ length: 12 }, () => new EnergyLine());
+      const dust = Array.from({ length: 30 }, () => new Dust());
+
+      let t = 0;
+      function animate() {
+        t++;
+        ctx.clearRect(0, 0, W, H);
+        for (const l of lines) { l.update(); l.draw(); }
+        for (const p of orbitals) { p.update(); p.draw(); }
+        for (const d of dust) { d.update(); d.draw(); }
+        const pulse = 0.5 + Math.sin(t * 0.02) * 0.3;
+        const grad = ctx.createRadialGradient(cx(), cy(), 0, cx(), cy(), 100);
+        grad.addColorStop(0, `rgba(127, 255, 212, ${0.015 * pulse})`);
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W, H);
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      setTimeout(() => {
+        const splash = document.getElementById('splash');
+        splash.classList.add('hide');
+        setTimeout(() => splash.remove(), 400);
+      }, 4000);
+    </script>
   </body>
 </html>

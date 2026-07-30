@@ -563,29 +563,7 @@ pub fn run() {
                 )?;
             }
 
-            // Create splash window (400x300, centered, no decorations)
-            let splash_url = if cfg!(debug_assertions) {
-                "http://localhost:5173/splash.html".to_string()
-            } else {
-                "splash.html".to_string()
-            };
-
-            let splash_window = tauri::WebviewWindowBuilder::new(
-                app,
-                "splash",
-                tauri::WebviewUrl::App(splash_url.into()),
-            )
-            .title("Obsidian")
-            .inner_size(400.0, 300.0)
-            .resizable(false)
-            .decorations(false)
-            .transparent(false)
-            .shadow(false)
-            .background_color(tauri::window::Color(3, 3, 5, 255))
-            .center()
-            .build()?;
-
-            // Create main window from Rust (same as Electron: background color set natively)
+            // Create main window (splash is embedded in index.html)
             let main_url = if cfg!(debug_assertions) {
                 "http://localhost:5173".to_string()
             } else {
@@ -603,8 +581,7 @@ pub fn run() {
             .decorations(false)
             .transparent(false)
             .shadow(false)
-            .background_color(tauri::window::Color(10, 10, 10, 255))
-            .visible(false)
+            .background_color(tauri::window::Color(3, 3, 5, 255))
             .center()
             .build()?;
 
@@ -622,7 +599,7 @@ pub fn run() {
                 }
             });
 
-            // After 4 seconds: close splash, animate main window expansion, show it
+            // After 4 seconds: animate window expansion (splash fades out via CSS)
             tauri::async_runtime::spawn(async move {
                 tokio::time::sleep(std::time::Duration::from_secs(4)).await;
 
@@ -631,19 +608,16 @@ pub fn run() {
                 let end_w: f64 = 800.0;
                 let end_h: f64 = 500.0;
 
-                // Get center from splash window's actual position (same as Electron getBounds())
-                // This ensures the main window expands from the exact same center as the splash.
-                let (center_x, center_y) = splash_window.outer_position()
+                let (center_x, center_y) = main_window.outer_position()
                     .ok()
                     .and_then(|pos| {
-                        splash_window.scale_factor().ok().map(|scale| {
+                        main_window.scale_factor().ok().map(|scale| {
                             let lx = pos.to_logical::<f64>(scale).x;
                             let ly = pos.to_logical::<f64>(scale).y;
                             (lx + start_w / 2.0, ly + start_h / 2.0)
                         })
                     })
                     .unwrap_or_else(|| {
-                        // Fallback: use primary monitor center
                         main_window.primary_monitor()
                             .ok()
                             .flatten()
@@ -658,16 +632,6 @@ pub fn run() {
                             })
                             .unwrap_or((400.0, 300.0))
                     });
-
-                let _ = splash_window.close();
-
-                // Position main window at the center before showing it
-                let init_x = center_x - start_w / 2.0;
-                let init_y = center_y - start_h / 2.0;
-                let _ = main_window.set_position(tauri::Position::Logical(
-                    tauri::LogicalPosition { x: init_x, y: init_y },
-                ));
-                let _ = main_window.show();
 
                 let fps: f64 = 60.0;
                 let duration_ms: f64 = 600.0;
