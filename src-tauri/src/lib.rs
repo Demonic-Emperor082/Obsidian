@@ -117,6 +117,7 @@ fn is_roblox_running() -> bool {
 
 #[tauri::command]
 fn kill_roblox() -> bool {
+    log::info!("[App] Killing Roblox processes");
     #[cfg(target_os = "windows")]
     {
         let _ = Command::new("taskkill")
@@ -207,11 +208,57 @@ fn clear_browser_cache() {}
 
 #[tauri::command]
 fn get_log_files() -> Vec<String> {
+    let mut dirs = Vec::new();
+    if let Ok(cwd) = std::env::current_dir() {
+        dirs.push(cwd.join("logs"));
+        if let Some(parent) = cwd.parent() {
+            dirs.push(parent.join("logs"));
+            dirs.push(parent.join("lunex").join("logs"));
+        }
+    }
+    if let Some(local) = dirs_next::data_local_dir() {
+        dirs.push(local.join("obsidian").join("logs"));
+    }
+
+    for dir in &dirs {
+        if dir.exists() {
+            let mut files: Vec<String> = std::fs::read_dir(dir)
+                .ok()
+                .into_iter()
+                .flatten()
+                .filter_map(|e| e.ok())
+                .filter(|e| e.path().extension().map_or(false, |ext| ext == "log"))
+                .filter_map(|e| e.file_name().into_string().ok())
+                .collect();
+            if !files.is_empty() {
+                files.sort();
+                return files;
+            }
+        }
+    }
     Vec::new()
 }
 
 #[tauri::command]
-fn read_log_file(_filename: String) -> String {
+fn read_log_file(filename: String) -> String {
+    let mut dirs = Vec::new();
+    if let Ok(cwd) = std::env::current_dir() {
+        dirs.push(cwd.join("logs"));
+        if let Some(parent) = cwd.parent() {
+            dirs.push(parent.join("logs"));
+            dirs.push(parent.join("lunex").join("logs"));
+        }
+    }
+    if let Some(local) = dirs_next::data_local_dir() {
+        dirs.push(local.join("obsidian").join("logs"));
+    }
+
+    for dir in &dirs {
+        let path = dir.join(&filename);
+        if path.exists() && path.parent() == Some(dir) {
+            return std::fs::read_to_string(path).unwrap_or_default();
+        }
+    }
     String::new()
 }
 
@@ -482,6 +529,11 @@ pub fn run() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
+        .plugin(
+            tauri_plugin_log::Builder::default()
+                .level(log::LevelFilter::Info)
+                .build(),
+        )
         .invoke_handler(tauri::generate_handler![
             rpc_start,
             rpc_update,
@@ -540,6 +592,8 @@ pub fn run() {
             open_pastebin_bat
         ])
         .setup(|app| {
+            log::info!("[App] Starting Obsidian v{}", app.config().version.as_deref().unwrap_or("unknown"));
+
             let show = MenuItemBuilder::with_id("show", "Mostrar Obsidian").build(app)?;
             let quit = MenuItemBuilder::with_id("quit", "Salir").build(app)?;
             let tray_menu = MenuBuilder::new(app).items(&[&show, &quit]).build()?;
@@ -565,15 +619,8 @@ pub fn run() {
                 })
                 .build(app)?;
 
-            if cfg!(debug_assertions) {
-                app.handle().plugin(
-                    tauri_plugin_log::Builder::default()
-                        .level(log::LevelFilter::Info)
-                        .build(),
-                )?;
-            }
-
             // Create main window (splash is embedded in index.html)
+            log::info!("[App] Creating main window");
             let main_url = if cfg!(debug_assertions) {
                 "http://localhost:5173".to_string()
             } else {
@@ -601,6 +648,7 @@ pub fn run() {
                 if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                     let state = main_for_close.state::<AppState>();
                     if state.minimize_to_tray.lock().unwrap().0 {
+                        log::info!("[App] Close requested, minimizing to tray");
                         api.prevent_close();
                         if let Some(main) = main_for_close.get_webview_window("main") {
                             let _ = main.hide();
@@ -609,6 +657,7 @@ pub fn run() {
                 }
             });
 
+            log::info!("[App] Scheduling window expansion in 4s");
             // After 4 seconds: animate window expansion (splash fades out via CSS)
             tauri::async_runtime::spawn(async move {
                 tokio::time::sleep(std::time::Duration::from_secs(4)).await;
@@ -675,15 +724,18 @@ pub fn run() {
                     width: end_w,
                     height: end_h,
                 }));
+                log::info!("[App] Window expanded to {}x{}", end_w, end_h);
             });
 
             // Start dedicated DLL thread (all DLL calls on one thread = TLS safe)
+            log::info!("[App] Starting Xeno DLL thread");
             {
                 let xeno_state = app.state::<xeno::XenoState>();
                 xeno::start_dll_thread(&xeno_state);
             }
 
             // Spawn Roblox monitor loop
+            log::info!("[App] Starting Roblox monitor");
             let handle = app.handle().clone();
             tauri::async_runtime::spawn(async move {
                 let mut last_state = false;
@@ -692,6 +744,7 @@ pub fn run() {
                     let current_state = is_roblox_running();
                     if current_state != last_state {
                         last_state = current_state;
+                        log::info!("[Roblox] Status changed: running={}", current_state);
                         let _ = handle.emit("roblox-status-changed", current_state);
                     }
                 }

@@ -240,8 +240,12 @@ export default function SettingsPage({ setPage }: Props) {
 
         {/* Server Logs */}
         <div className="settings-section">
-          <div className="section-header">
-            <span className="section-label">{t('settings.logs')}</span>
+          <span className="section-label">{t('settings.logs')}</span>
+          <div className="setting-row">
+            <div className="setting-info">
+              <span className="setting-name">Server Logs</span>
+              <span className="setting-desc">View Xeno server log files</span>
+            </div>
             <Toggle value={showLogs} onChange={setShowLogs} />
           </div>
           {showLogs && <LogViewer />}
@@ -354,7 +358,7 @@ function LogViewer() {
   }, [selected])
 
   if (files.length === 0) {
-    return <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: 12, padding: '8px 0' }}>{t('common.loading')}</div>
+    return <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: 12, padding: '8px 0' }}>No log files found</div>
   }
 
   return (
