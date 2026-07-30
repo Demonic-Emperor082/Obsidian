@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/logo.svg" alt="Obsidian Logo" width="120">
+<img src="public/obsidian-mark.svg" alt="Obsidian Logo" width="120">
 
 # Obsidian
 
