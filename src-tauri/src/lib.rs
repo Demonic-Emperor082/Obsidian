@@ -117,7 +117,6 @@ fn is_roblox_running() -> bool {
 
 #[tauri::command]
 fn kill_roblox() -> bool {
-    log::info!("[App] Killing Roblox processes");
     #[cfg(target_os = "windows")]
     {
         let _ = Command::new("taskkill")
@@ -592,8 +591,6 @@ pub fn run() {
             open_pastebin_bat
         ])
         .setup(|app| {
-            log::info!("[App] Starting Obsidian v{}", app.config().version.as_deref().unwrap_or("unknown"));
-
             let show = MenuItemBuilder::with_id("show", "Mostrar Obsidian").build(app)?;
             let quit = MenuItemBuilder::with_id("quit", "Salir").build(app)?;
             let tray_menu = MenuBuilder::new(app).items(&[&show, &quit]).build()?;
@@ -620,7 +617,6 @@ pub fn run() {
                 .build(app)?;
 
             // Create main window (splash is embedded in index.html)
-            log::info!("[App] Creating main window");
             let main_url = if cfg!(debug_assertions) {
                 "http://localhost:5173".to_string()
             } else {
@@ -648,7 +644,6 @@ pub fn run() {
                 if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                     let state = main_for_close.state::<AppState>();
                     if state.minimize_to_tray.lock().unwrap().0 {
-                        log::info!("[App] Close requested, minimizing to tray");
                         api.prevent_close();
                         if let Some(main) = main_for_close.get_webview_window("main") {
                             let _ = main.hide();
@@ -657,7 +652,6 @@ pub fn run() {
                 }
             });
 
-            log::info!("[App] Scheduling window expansion in 4s");
             // After 4 seconds: animate window expansion (splash fades out via CSS)
             tauri::async_runtime::spawn(async move {
                 tokio::time::sleep(std::time::Duration::from_secs(4)).await;
@@ -724,18 +718,15 @@ pub fn run() {
                     width: end_w,
                     height: end_h,
                 }));
-                log::info!("[App] Window expanded to {}x{}", end_w, end_h);
             });
 
             // Start dedicated DLL thread (all DLL calls on one thread = TLS safe)
-            log::info!("[App] Starting Xeno DLL thread");
             {
                 let xeno_state = app.state::<xeno::XenoState>();
                 xeno::start_dll_thread(&xeno_state);
             }
 
             // Spawn Roblox monitor loop
-            log::info!("[App] Starting Roblox monitor");
             let handle = app.handle().clone();
             tauri::async_runtime::spawn(async move {
                 let mut last_state = false;
@@ -744,7 +735,6 @@ pub fn run() {
                     let current_state = is_roblox_running();
                     if current_state != last_state {
                         last_state = current_state;
-                        log::info!("[Roblox] Status changed: running={}", current_state);
                         let _ = handle.emit("roblox-status-changed", current_state);
                     }
                 }
