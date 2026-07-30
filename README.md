@@ -1,18 +1,18 @@
 <div align="center">
 
-<img src="public/Lumex.png" alt="Lumex Logo" width="100">
+<img src="public/logo.svg" alt="Obsidian Logo" width="120">
 
-# Lumex
+# Obsidian
 
-**A sleek, modern Electron UI for Xeno — the Roblox script executor.**
+**A modern Tauri-based UI for Xeno — the Roblox script executor.**
 
-![Version](https://img.shields.io/badge/version-1.0.0-green)
-![Electron](https://img.shields.io/badge/Electron-31-47848F)
+![Tauri](https://img.shields.io/badge/Tauri-2.x-FFC131)
 ![React](https://img.shields.io/badge/React-18-61DAFB)
+![Rust](https://img.shields.io/badge/Rust-1.77-CE422B)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue)
 
-[Download](#installation) • [Features](#features) • [Screenshots](#screenshots) • [Setup](#development)
+[Download](#installation) • [Features](#features) • [Development](#development)
 
 </div>
 
@@ -20,38 +20,27 @@
 
 ## Features
 
-- **Multi-tab Script Editor** — Powered by Monaco Editor with Lua syntax highlighting, autocomplete, and a custom dark theme
+- **Multi-tab Script Editor** — Monaco Editor with Lua syntax highlighting and autocomplete
 - **ScriptHub** — Browse and run scripts from ScriptBlox directly inside the app
-- **One-Click Attach** — Inject into Roblox with a single button press
+- **One-Click Attach** — Inject into Roblox via Xeno DLL with a single button
 - **Execute, Clear, Kill** — Full control over script execution and Roblox processes
-- **Discord Rich Presence** — Shows your status on Discord with a clean custom activity
+- **Discord Rich Presence** — Shows your status on Discord with a custom activity
 - **Auto-Attach** — Optionally attach automatically when Roblox starts
-- **Kill Roblox** — Instantly terminate Roblox from the home screen or editor
+- **AI Assistant** — Built-in OpenCode AI integration for code help
 - **Always on Top** — Pin the window above other applications
 - **Customizable** — Change accent color, font size, and more in Settings
 - **Zoom Controls** — Ctrl+=, Ctrl+-, Ctrl+0 for quick zoom
 - **Toast Notifications** — Non-intrusive feedback for every action
-- **Particle Background** — Animated particles that react to your cursor on the home screen
-
----
-
-## Screenshots
-
-<div align="center">
-
-| Home | Editor | ScriptHub |
-|------|--------|-----------|
-| *Clock, greeting, status, quick actions* | *Monaco editor with multi-tab support* | *Browse & run scripts from ScriptBlox* |
-
-</div>
+- **Animated Splash Screen** — Smooth window expansion on launch
+- **System Tray** — Minimize to tray on close
 
 ---
 
 ## Installation
 
-1. Download the latest release from [Releases](https://github.com/Mewlzebub/Lumex/releases)
+1. Download the latest release from [Releases](https://github.com/Demonic-Emperor082/Obsidian/releases)
 2. Run the installer
-3. Launch Lumex
+3. Launch Obsidian
 
 ---
 
@@ -60,30 +49,32 @@
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) 18+
+- [Rust](https://www.rust-lang.org/tools/install) 1.77+
 - [pnpm](https://pnpm.io/) (recommended) or npm
 
 ### Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mewlzebub/Lumex.git
-cd Lumex
+git clone https://github.com/Demonic-Emperor082/Obsidian.git
+cd Obsidian
 
 # Install dependencies
 pnpm install
 
-# Start development server
+# Start development server (frontend only)
 pnpm dev
+
+# Start Tauri dev (full app with Rust backend)
+pnpm tauri:dev
 ```
 
 ### Build
 
 ```bash
 # Build for production
-pnpm build
+pnpm tauri:build
 ```
-
-The output will be in the `dist` folder.
 
 ---
 
@@ -91,41 +82,33 @@ The output will be in the `dist` folder.
 
 | Technology | Purpose |
 |------------|---------|
-| Electron | Desktop app shell |
+| Tauri 2.x | Desktop app shell & native APIs |
 | React 18 | UI framework |
+| Rust | Backend, DLL integration, system APIs |
 | TypeScript | Type safety |
 | Vite | Build tool |
 | Monaco Editor | Code editor |
-| Electron Builder | Packaging & distribution |
 
 ---
 
 ## Project Structure
 
 ```
-lumex/
-├── electron/          # Electron main process
-│   ├── main.ts        # App entry, IPC handlers, server management
-│   ├── preload.ts     # Context bridge for renderer
-│   └── rpc.ts         # Discord Rich Presence (native net module)
-├── src/
-│   ├── components/    # Reusable UI components
-│   │   ├── TitleBar.tsx
-│   │   ├── Toast.tsx
-│   │   └── ClientsModal.tsx
-│   ├── pages/         # App pages
-│   │   ├── HomePage.tsx
-│   │   ├── EditorPage.tsx
-│   │   ├── ScriptHubPage.tsx
-│   │   └── SettingsPage.tsx
-│   ├── lib/           # Utilities & types
-│   │   ├── api.ts
-│   │   ├── settings.ts
-│   │   └── electron.d.ts
-│   └── styles/        # Global styles
-├── dll/               # Xeno DLLs
-├── public/            # Static assets
-├── Lumex_server.exe   # Injection server
+obsidian/
+├── src-tauri/           # Rust backend
+│   ├── src/
+│   │   ├── lib.rs       # App entry, commands, window management
+│   │   ├── xeno.rs      # Xeno DLL integration
+│   │   └── opencode.rs  # OpenCode AI integration
+│   ├── Cargo.toml
+│   └── tauri.conf.json
+├── src/                 # React frontend
+│   ├── components/      # Reusable UI components
+│   ├── pages/           # App pages
+│   ├── lib/             # Utilities & API calls
+│   ├── locales/         # i18n (en/es)
+│   └── styles/          # Global styles
+├── public/              # Static assets (logo, icons)
 └── package.json
 ```
 
