@@ -5,7 +5,6 @@ target/
 *.exe
 *.pdb
 *.zip
-dll/
 logs/
 
 renegade-server-extracted/
